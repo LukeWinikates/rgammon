@@ -1,4 +1,6 @@
 Gammon::Application.routes.draw do
+  resources :games, except: :edit
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
