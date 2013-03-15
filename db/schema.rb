@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(:version => 20130314152143) do
   end
 
   create_table "points", :force => true do |t|
-    t.integer  "game_id",       :null => false
+    t.integer  "game_id",                      :null => false
     t.string   "color"
-    t.integer  "checker_count"
-    t.integer  "num"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.integer  "checker_count", :default => 0, :null => false
+    t.integer  "num",                          :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
 end
