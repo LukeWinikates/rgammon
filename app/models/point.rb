@@ -1,5 +1,5 @@
 class Point < ActiveRecord::Base
-  attr_accessible :checker_count, :color, :num
+  attr_accessible :checker_count, :color, :num, :game
   belongs_to :game, :inverse_of => :points
   
   def blot?
@@ -11,6 +11,7 @@ class Point < ActiveRecord::Base
   end
 
   def add_checker(color)
+    self.checker_count ||= 0
     if blot? && self.color != color
       self.color = color
       self.checker_count = 0
@@ -23,11 +24,20 @@ class Point < ActiveRecord::Base
     if self.color == color
       self.checker_count += 1
     end
+
+    save!
+  end
+
+  def belongs_to?(player)
+    self.color.try(:to_sym) == player && self.checker_count > 0
   end
 
   def remove_checker
     if checker_count > 0
       self.checker_count -= 1
     end
+    self.color = nil if self.checker_count == 0 
+
+    self.save!
   end
 end

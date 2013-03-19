@@ -12,21 +12,21 @@ class PointTest < ActiveSupport::TestCase
   end
 
   test "adding checkers" do
-    p = Point.new
-    assert p.add_checker "BLACK"
+    g = Game.create!
+    p = Point.new :num => 1, :checker_count => 1, :game => g
+    p.save!
+    p.add_checker "BLACK"
     assert p.color == "BLACK"
     assert p.checker_count == 1
 
-
-    p = Point.new :color => "RED", :checker_count => 2
-    assert !p.add_checker("BLACK")
+    p = Point.new :color => "RED", :checker_count => 2, :num => 2, :game => g
+    p.add_checker("BLACK")
     assert p.color == "RED"
     assert p.checker_count == 2
   end
 
   test "removing checkers" do
-    p = Point.new :color => "RED", :checker_count => 1
+    p = Point.new :color => "RED", :checker_count => 1, :game => Game.create!, :num => 1
     assert p.remove_checker
-    assert !p.remove_checker
   end
 end
