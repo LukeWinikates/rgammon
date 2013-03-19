@@ -32,11 +32,23 @@ class GameTest < ActiveSupport::TestCase
 
   test "taking a checker" do
     game = Game.create_default
+    game.dice = Dice.new([1, 4])
     game.points.find_by_num(4).add_checker(:black)
     game.points.find_by_num(5).add_checker(:red)
     game.move(:black, 4, 5)
     assert game.points.find_by_num(5).belongs_to?(:black)
     assert game.points.find_by_num(5).checker_count == 1
     assert game.red_bar.checker_count == 1
+  end
+
+  test "limiting legal moves based on dice" do
+    game = Game.create_default
+    game.dice = Dice.new [4, 5]
+    game.points.find_by_num(1).add_checker(:black)
+    game.points.find_by_num(1).add_checker(:black)
+    assert game.can_move?(:black, 1, 7) == false
+    assert game.can_move?(:black, 1, 5)
+    assert game.can_move?(:black, 1, 6)
+    assert game.legal_turn?(:black, [Move.new(1, 5), Move.new(1, 6)])
   end
 end

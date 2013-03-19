@@ -3,4 +3,8 @@ class Dice
   def initialize(values)
     @values = values
   end
+
+  def contains?(value)
+    @values.include? value
+  end
 end
