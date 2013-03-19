@@ -2,6 +2,14 @@ class Game < ActiveRecord::Base
   attr_accessible :current_player, :dice
   has_many :points, :inverse_of => :game
 
+  def red_bar
+    @red_bar ||= Bar.new 
+  end
+
+  def black_bar
+    @black_bar ||= Bar.new
+  end
+
   class << self
     def create_default
       game = new
@@ -19,8 +27,17 @@ class Game < ActiveRecord::Base
   def move(player, start_point, end_point)
     if can_move_from(player, start_point) && can_move_to(player, end_point)
       points.find_by_num(start_point).remove_checker
-      points.find_by_num(end_point).add_checker(player)
+      dest = points.find_by_num(end_point) 
+      take_point(dest)
+      dest.add_checker(player)
     end 
+  end
+
+  def take_point(point)
+    if point.checker_count > 0
+      bar = point.color.to_sym == :black ? black_bar : red_bar
+      bar.checker_count = point.checker_count
+    end
   end
 
   def can_move_from(player, start_point)
@@ -30,6 +47,6 @@ class Game < ActiveRecord::Base
 
   def can_move_to(player, end_point)
     point = points.find_by_num(end_point)
-    point.empty? || point.belongs_to?(player)
+    point.empty? || point.blot? || point.belongs_to?(player)
   end
 end
