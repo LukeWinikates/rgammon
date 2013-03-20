@@ -21,16 +21,16 @@ class Game < ActiveRecord::Base
 
   def legal_turn?(player, moves)
     moves.all? do |m|
-      dice_allows? m.start_point, m.end_point
+      can_move?(player,  m.start_point, m.end_point)
     end
   end
 
   def can_move?(player, start_point, end_point)
-    dice_allows?(start_point, end_point) && can_move_from(player, start_point) && can_move_to(player, end_point)
+    current_player.try(:to_sym) == player && dice_allows?(start_point, end_point) && can_move_from(player, start_point) && can_move_to(player, end_point)
   end
 
   def dice_allows?(start_point, end_point)
-    dice.contains?(end_point-start_point)
+    dice.contains?((end_point-start_point).abs)
   end
 
   def roll_to_start

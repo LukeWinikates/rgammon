@@ -12,7 +12,7 @@ class Point < ActiveRecord::Base
 
   def add_checker(color)
     self.checker_count ||= 0
-    if blot? && self.color != color
+    if blot? && !belongs_to?(color)
       self.color = color
       self.checker_count = 0
     end
@@ -21,7 +21,7 @@ class Point < ActiveRecord::Base
       self.color = color
     end
 
-    if self.color == color
+    if self.color.try(:to_sym) == color.to_sym 
       self.checker_count += 1
     end
 
