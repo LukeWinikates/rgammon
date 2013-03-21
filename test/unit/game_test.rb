@@ -67,4 +67,13 @@ class GameTest < ActiveSupport::TestCase
     game.current_player = :red
     assert game.legal_turn?(:red, [Move.new(24, 21), Move.new(24, 22)])
   end
+
+  test "saving dice value" do
+    game = Game.create_default
+    game.dice = Dice.new [4, 1]
+    game.save!
+
+    game2 = Game.find(game.id)
+    assert game2.dice == game.dice
+  end
 end
