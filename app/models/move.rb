@@ -5,4 +5,8 @@ class Move
     self.start_point = start_point
     self.end_point = end_point
   end
+
+  def to_params
+    "?start_point=#{start_point}&end_point=#{end_point}"
+  end
 end
