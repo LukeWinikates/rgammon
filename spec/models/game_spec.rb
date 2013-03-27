@@ -16,6 +16,10 @@ describe Game do
   describe "creating a traditional game" do
     let(:game) { Game.create_with_traditional_layout }
 
+    it "has 24 points" do
+      game.points.map(&:num).should == (1..24).to_a
+    end
+
     it "has the traditional checker layout" do
       expect(game.point(1)).to have_checkers(:red, 2)
       expect(game.point(6)).to have_checkers(:black, 5)
