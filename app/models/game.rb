@@ -11,11 +11,34 @@ class Game < ActiveRecord::Base
     @black_bar ||= Bar.new
   end
 
+  def point(num)
+    points.find_by_num num
+  end
+
   class << self
     def create_default
       game = new
       24.times { |i| game.points.build(:num => i+1) }
       game.save!
+      game
+    end
+
+    def create_with_traditional_layout 
+      game = create_default
+      defaults = [
+        {:num => 1, :color => :red, :checker_count => 2 },
+        {:num => 6, :color => :black, :checker_count => 5},
+        {:num => 8, :color => :black, :checker_count => 3},
+        {:num => 12, :color => :red, :checker_count => 5},
+        {:num => 13, :color => :black, :checker_count => 5},
+        {:num => 17, :color => :red, :checker_count => 3},
+        {:num => 19, :color => :red, :checker_count => 5},
+        {:num => 24, :color => :black, :checker_count => 2}
+      ]
+      defaults.each do |d|
+        game.points.find_by_num(d[:num]).update_attributes(d)
+      end
+
       game
     end
   end
