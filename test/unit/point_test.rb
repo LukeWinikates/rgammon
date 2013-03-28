@@ -1,11 +1,6 @@
 require 'test_helper'
 
 class PointTest < ActiveSupport::TestCase
-  test "blots" do
-    p = Point.new :checker_count => 1
-    assert p.blot?
-  end
-
   test "empty?" do
     p = Point.new :checker_count => 0
     assert p.empty?
