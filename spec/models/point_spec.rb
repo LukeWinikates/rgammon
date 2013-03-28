@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Point do
+  let(:game) { Game.create! }
+  
   describe "blots & empties" do
     context "when a point has one checker" do
       let(:point) { Point.new :checker_count => 1 }
@@ -28,7 +30,6 @@ describe Point do
   end
 
   describe "adding checkers" do
-    let(:game) { Game.create! }
     let(:attributes) { {:num => num, :color => start_color, :checker_count => checker_count, :game => game } }
     let(:num) { 1 }
     let(:start_color) { nil }
@@ -67,6 +68,16 @@ describe Point do
       let(:color) { :red }
       
       specify { point.should have_checkers(start_color, 2) }
+    end
+  end
+
+  describe "removing checkers" do
+    let(:point) { Point.new :color => :red, :checker_count => 1, :game => Game.create!, :num => 1 }
+    
+    before { point.remove_checker }
+
+    it "decrements the checker count and unsets the color" do
+      point.should have_checkers(nil, 0)
     end
   end
 end
