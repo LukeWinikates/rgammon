@@ -1,6 +1,8 @@
 Gammon::Application.routes.draw do
   match 'games/:game_id/moves/try' => 'moves#try'
-  resources :games, except: :edit
+  resources :games, except: :edit do
+    resource :dice_rolls, except: :edit
+  end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

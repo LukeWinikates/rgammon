@@ -47,9 +47,16 @@ class Game < ActiveRecord::Base
     dice.contains?((end_point-start_point).abs)
   end
 
+  def unstarted?
+    self.current_player.nil?
+  end
+
+  def random_player 
+    [:black, :red][rand 2]
+  end
+
   def roll_to_start
-    self.current_player = [:black, :red][rand 2]
-    self.dice = (rand 6) * 2
+    update_attributes(:current_player => random_player, :dice => Dice.roll)
   end
 
   def move(player, start_point, end_point)

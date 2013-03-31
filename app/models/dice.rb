@@ -19,4 +19,14 @@ class Dice
   def <=>(other_dice)
     values <=> other_dice.values
   end
+  
+  class << self
+    def random_value 
+      (rand 6) + 1
+    end
+
+    def roll
+      Dice.new([] << random_value << random_value)
+    end
+  end
 end
