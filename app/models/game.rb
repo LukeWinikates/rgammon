@@ -23,6 +23,17 @@ class Game < ActiveRecord::Base
       game
     end
 
+    def from_layout(layout, num_points)
+      game = new
+      num_points.times do |i| 
+        layout_entry = { :num => i + 1 }.merge(layout[i+1] || {} )
+        game.points.build(layout_entry) 
+      end
+
+      game.save!
+      game
+    end
+
     def create_with_traditional_layout 
       game = create_default
       Layouts.traditional.each do |d|

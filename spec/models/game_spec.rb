@@ -58,7 +58,26 @@ describe Game do
     end
 
     context "when taking a checker" do
-      
+      let(:layout) do
+        { 1 => { :checker_count => 2, :color => :black },
+          2 => { :checker_count => 2, :color => :black },
+          4 => { :checker_count => 1, :color => :red } }
+      end
+      let(:game) do
+        game = Game.from_layout(layout, 4)
+        game.update_attributes!(:dice => Dice.new([2, 5]), :current_player => :black) 
+
+        game.move(:black, 2, 4)
+        game
+      end
+
+      it "moves the taken checker to the bar" do
+        game.red_bar.checker_count.should == 1
+      end
+
+      it "changes the color of the point" do
+        game.point(4).should have_checkers(:black, 1)
+      end
     end
   end
 end
