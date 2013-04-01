@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe Game do
+  describe "persistence" do
+    it "saves the dice value" do
+      game = Game.create_default
+      game.dice = Dice.new [4, 1]
+      game.save!
+
+      game.reload.dice.should == Dice.new([4,1])
+    end 
+  end
+
   describe "rolling to start" do
     let(:game) { Game.create_default }
     subject { game.reload }
