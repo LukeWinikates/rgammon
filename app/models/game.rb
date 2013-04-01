@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   attr_accessible :current_player, :dice
   has_many :points, :inverse_of => :game
-  composed_of :dice, :class_name => "Dice", :mapping => %w(dice to_s), :constructor => Proc.new { |value_string| Dice.new(value_string.split(",").map(&:to_i)) }
+  composed_of :dice, :class_name => "Dice", :mapping => %w(dice to_s), :constructor => Proc.new { |value_string| Dice.from_string value_string }
 
   def red_bar
     @red_bar ||= Bar.new 

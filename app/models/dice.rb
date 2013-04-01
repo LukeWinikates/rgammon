@@ -28,5 +28,9 @@ class Dice
     def roll
       Dice.new([] << random_value << random_value)
     end
+
+    def from_string(value_string)
+      Dice.new(value_string.split(",").map(&:to_i)) if value_string
+    end
   end
 end
