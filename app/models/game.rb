@@ -44,12 +44,6 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def legal_turn?(player, moves)
-    moves.all? do |m|
-      can_move?(player,  m.start_point, m.end_point)
-    end
-  end
-
   def can_move?(player, start_point, end_point)
     current_player.try(:to_sym) == player && dice_allows?(start_point, end_point) && can_move_from(player, start_point) && can_move_to(player, end_point)
   end

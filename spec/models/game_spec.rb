@@ -67,6 +67,22 @@ describe Game do
       game.point(2).checker_count.should == 1
     end
 
+    context "when a player other than the current player tries to move" do
+      it "rejects the move" do
+        game.can_move?(:red, 2, 1).should be(false)
+        game.move(:red, 2, 1)
+        game.point(1).should_not have_checkers(:red, 1)
+      end
+    end
+
+    context "when the player tries to move the wrong number of spaces" do
+      it "rejects the move" do
+        game.can_move?(:black, 2, 6).should be(false)
+        game.move(:black, 2, 6)
+        game.point(6).should have_checkers(nil, 0)
+      end
+    end
+
     context "when taking a checker" do
       let(:layout) do
         { 1 => { :checker_count => 2, :color => :black },
