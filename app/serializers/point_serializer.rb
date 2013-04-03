@@ -1,3 +1,3 @@
 class PointSerializer < ActiveModel::Serializer
-  attributes :num
+  attributes :num, :color, :checker_count
 end

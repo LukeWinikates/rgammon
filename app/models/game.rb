@@ -35,12 +35,7 @@ class Game < ActiveRecord::Base
     end
 
     def create_with_traditional_layout 
-      game = create_default
-      Layouts.traditional.each do |d|
-        game.points.find_by_num(d[:num]).update_attributes(d)
-      end
-
-      game
+      from_layout(Layouts.traditional, 24)
     end
   end
 
@@ -70,6 +65,7 @@ class Game < ActiveRecord::Base
       dest = points.find_by_num(end_point) 
       take_point(dest)
       dest.add_checker(player)
+      dice.remove((start_point-end_point).abs)
     end 
   end
 

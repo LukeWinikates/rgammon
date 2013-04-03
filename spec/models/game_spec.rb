@@ -67,6 +67,10 @@ describe Game do
       game.point(2).checker_count.should == 1
     end
 
+    it "updates the dice" do
+      game.dice.should == Dice.new([])
+    end
+
     context "when a player other than the current player tries to move" do
       it "rejects the move" do
         game.can_move?(:red, 2, 1).should be(false)

@@ -8,6 +8,10 @@ class Dice
     @values.include? value
   end
 
+  def remove(value)
+    @values.delete(value)
+  end
+
   def to_s
     values.join ","
   end

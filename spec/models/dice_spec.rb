@@ -18,4 +18,15 @@ describe Dice do
       end
     end
   end
+
+  describe "removing a die" do
+    let(:dice) { Dice.new([4, 5]) }
+    before do
+      dice.remove 4
+    end
+
+    it "contains only the other die" do
+      dice.should == Dice.new([5])
+    end
+  end
 end
