@@ -1,4 +1,5 @@
 Gammon::Application.routes.draw do
+  root :to => "static_pages#index"
   match 'games/:game_id/moves/try' => 'moves#try'
   resources :games, except: :edit do
     resource :moves, only: :create

@@ -2,12 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'rails-api'
 gem 'active_model_serializers'
 gem 'sqlite3'
+gem "ember-rails"
 
 group :test, :development do
   gem "rspec-rails"
