@@ -47,11 +47,12 @@ describe Game do
 
   describe "moving checkers" do
     let(:game) { Game.create_default }
+    let(:dice) { Dice.new [1, 6] }
 
     before do
       game.current_player = :black
       game.point(1).add_checker :black
-      game.dice = Dice.new [1]
+      game.dice = dice
       game.move(:black, 1, 2)
     end
 
@@ -68,7 +69,19 @@ describe Game do
     end
 
     it "updates the dice" do
-      game.dice.should == Dice.new([])
+      game.dice.should == Dice.new([6])
+    end
+
+    context "when the last move of the turn is complete" do
+      let(:dice) { Dice.new [1] }
+
+      it "re-rolls the dice" do
+        game.reload.dice.should_not be_empty
+      end
+      
+      it "changes the current player" do
+        game.current_player.should == :red 
+      end
     end
 
     context "when a player other than the current player tries to move" do

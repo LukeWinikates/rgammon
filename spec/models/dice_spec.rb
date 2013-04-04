@@ -7,6 +7,10 @@ describe Dice do
     Dice.new([4, 5]).should_not == Dice.new([2, 4])
   end
 
+  it "should be considered empty if it contains no values" do
+    Dice.new([]).empty?.should be_true
+  end
+
   describe "rolling the dice" do
     subject { Dice.roll }
 

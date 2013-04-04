@@ -12,6 +12,10 @@ class Dice
     @values.delete(value)
   end
 
+  def empty?
+    @values.empty?
+  end
+
   def to_s
     values.join ","
   end

@@ -66,7 +66,18 @@ class Game < ActiveRecord::Base
       take_point(dest)
       dest.add_checker(player)
       dice.remove((start_point-end_point).abs)
+      next_turn
     end 
+  end
+
+  def next_turn
+    if dice.empty?
+      update_attributes(:current_player => other_player, :dice => Dice.roll)
+    end
+  end
+
+  def other_player
+    self.current_player.try(:to_sym) == :black ? :red : :black 
   end
 
   def take_point(point)
