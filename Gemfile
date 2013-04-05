@@ -9,6 +9,7 @@ gem "ember-rails"
 
 group :test, :development do
   gem "rspec-rails"
+  gem 'konacha'
 end
 
 # To use ActiveModel has_secure_password
